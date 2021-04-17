@@ -14,3 +14,7 @@ Transfer learning is the practice of taking advantage of pre-trained networks tu
 
 ### Resources
 - you can get pre-trained networks that have been stripped of the classification layer from Tensorflow Hub
+
+### TF Library specifics
+- Feature extractor
+    - this is the term for the partial model from TF Hub
