@@ -64,3 +64,16 @@
 - window is observation and the resulting time-step value is the target
 
 #### TODO: Finish time windows
+- prefetch
+    - specific to tensorflow.data
+    - while the model is working on one batch, the dataset will be preparing the next batch in parallel
+- shuffle dataset so that it's IID
+    - independent and identically distributed
+- the time series is essentially broken up into windows followed by a data point
+- the window is the training data and the data point is the label
+- the windows are the batches for the model
+
+### Training a model
+This was the first example
+- used SGD for optimization and Huber loss
+    - used mean absolute error for metric for which Huber is good for
