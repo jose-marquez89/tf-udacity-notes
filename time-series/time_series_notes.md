@@ -63,7 +63,7 @@
 - prepare a dataset of time windows of a fixed size
 - window is observation and the resulting time-step value is the target
 
-#### TODO: Finish time windows
+### Time windows
 - prefetch
     - specific to tensorflow.data
     - while the model is working on one batch, the dataset will be preparing the next batch in parallel
@@ -77,3 +77,37 @@
 This was the first example
 - used SGD for optimization and Huber loss
     - used mean absolute error for metric for which Huber is good for
+- save checkpoints for the model because RNN's can be difficult to train
+    - gradients flow down RNN layers but also back through time
+    - RNN is like a very deep NN
+- you can use the learning rate scheduler to gradually grow the learning rate
+
+
+### How an RNN works
+- outputs a batch of forecasts from a batch of input sequences
+- the full input shape is 3 dimensional
+    - last dimension is 1 for a univariate series
+- composed of a single memory cell that is repeated
+    - this cell gets reused by the layer
+- the reason it's called a recurrent network is because there is a state vector that gets fed back in as an additional input at the next time step
+- output shape is in part dependent on units in the memory cell
+- tanh is the function used to prevent vanishing/exploding gradients
+- a large patience parameter is important
+
+### Sequence to Sequence approach
+- takes a sequence and outputs a sequence
+- doesn't need the lambda routine
+
+### Stateless and stateful RNNs
+- it's harder for simple models to learn longer patterns
+- at most will learn a few dozen timesteps
+- a stateless RNN will begin with a state equal to 0
+- even though during training the network updates the internal state, it starts with a zero state at each training iteration
+- Stateful RNN
+    - batches are not sampled randomly
+    - preserves state for next batch
+        - starts with final state vector of the previous training iteration
+    - at each epoch the network gets fed with consecutive windows
+    - at the the end of the epoch, the state vector gets reset to zero
+    - training can be very slow
+    - backpropagation may not work as well because the consecutive batches are highly correlated
